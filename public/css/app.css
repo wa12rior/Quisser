@@ -1,0 +1,21 @@
+body {
+    padding-top: 80px;
+    font-family: verdana;
+    letter-spacing: 0.7px;
+}
+
+.navbar-inverse {
+    background-color: indigo !important;
+}
+
+.panel-heading {
+    background-color: #6A2D97 !important;
+    color: #FFF !important;
+}
+
+input[type="submit"] {
+    border: none;
+    color: #FFF;
+    background-color: #7700CE;
+    padding: 5px 15px;
+}
