@@ -1,0 +1,269 @@
+* {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+html {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.wrapper__header {
+    height: 100px;
+    background-color: #011627;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.header__title {
+    color: #FFF;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 2em;
+}
+
+.header__navigationList {
+    display: flex;
+    font-size: 1.2em;
+}
+
+.navigation__item {
+    text-align: center;
+    flex: 1 1 50%;
+}
+
+.navigation__item:first-of-type {
+    border-right: 2px solid azure;
+}
+
+.navigation__item > a:hover, .header__title:hover {
+    cursor: pointer;
+    color: bisque;
+}
+
+.header__userNavigation {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: #011627;
+    padding: 5px 0;
+    color: #FFF;
+    width: 100%;
+    text-align: center;
+}
+
+.dropbtn {
+    color: white;
+    background-color: #011627;
+    padding: 15px;
+    padding-right: 4px;
+    font-size: 1.2em;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown:hover {
+    background-color: #f9f9f9;
+    color: #011627;
+}
+
+.caret {
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    transform: translateX(7%);
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #f9f9f9;
+    color: #011627;
+}
+
+.dropdown a:hover {background-color: #f1f1f1; color: #011627;}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content > a:last-of-type {
+    margin-top: 10px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.wrapper__form {
+    display: flex;
+    flex-direction: column;
+    min-width: 350px;
+    border: 1px solid #011627;
+}
+
+.form__header {
+    text-align: center;
+    background-color: #011627;
+    color: #FFF;
+    font-size: 1.5em;
+    padding: 10px 0;
+}
+
+.form__form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+}
+
+.form__form > * {
+    margin: 5px 0;
+}
+
+.form__form > input {
+    padding: 5px 5px;
+    border: 0.7px solid #011627;
+}
+
+.form__form > label, .form__form > button {
+    font-size: 1.1em;
+}
+
+.form__form > button {
+    width: 100px;
+    padding: 5px 15px;
+    background-color: #011627;
+    color: #FFF;
+}
+
+.form__form > button:hover {
+    border: 1px solid #011627;
+    color: #011627;
+    background-color: #FFF;
+}
+
+.form__alert {
+    color: #a94442;
+}
+
+.form__input--alert {
+    border: 0.7px solid #a94442 !important;
+}
+
+.alert__span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.alert {
+    width: 350px;
+    padding: 20px 15px;
+    margin-top: 10px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.alert__info {
+    color: cornflowerblue;
+    background-color: lightcyan;
+    border-color: cornflowerblue;
+}
+
+.alert__error {
+    color: tomato;
+    background-color: mistyrose;
+    border-color: tomato;
+}
+
+
+@media (min-width: 768px) {
+    .wrapper__header {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 100px;
+        height: 52px;
+    }
+
+    .dropdown-content {
+        transform: none;
+        text-align: right;
+    }
+
+    .navigation__item {
+        padding: 0 12px;
+        flex: unset;
+    }
+
+    .header__navigationList {
+        justify-content: space-between;
+    }
+
+    .wrapper__form {
+        margin: 0 80px;
+        min-width: 500px;
+    }
+
+    .alert {
+        width: 500px;
+    }
+
+}
+
+@media (min-width: 1024px) {
+    .wrapper__header {
+        padding: 0 200px;
+
+    }
+
+    .wrapper__form {
+        margin: 0 200px;
+    }
+}
