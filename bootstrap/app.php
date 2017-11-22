@@ -71,6 +71,18 @@ $container['HomeController'] = function($container) {
     return new \App\Controllers\HomeController($container);
 };
 
+$container['ProfileController'] = function($container) {
+    return new \App\Controllers\ProfileController($container);
+};
+
+$container['QuizCreationController'] = function($container) {
+    return new \App\Controllers\QuizCreationController($container);
+};
+
+$container['QuizController'] = function($container) {
+    return new \App\Controllers\QuizController($container);
+};
+
 $container['AuthController'] = function($container) {
     return new \App\Controllers\Auth\AuthController($container);
 };

@@ -3,8 +3,8 @@
 {% block content %}
 <div class="wrapper">
                 <div class="wrapper__form">
-                    <div class="form__header"> Sign up </div>
-                    <form class="form__form" method="post" action="{{ path_for('auth.signup') }}">
+                    <div class="form__header"> Registration </div>
+                    <form class="form__form" method="post" action="{{ path_for('auth.signup') }}" autocomplete="off">
                         <label class="form__label" for="email">Email</label>
                         <input class="form__input{{ errors.email ? ' form__input--alert' : '' }}" type="email" name="email" id="email" placeholder="name@example.com" value="{{ old.email }}">
                         {% if errors.email %}

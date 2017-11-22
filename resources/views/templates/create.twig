@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quisser</title>
+        
+        <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
+        <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
+        <link rel="stylesheet" href="{{ base_url() }}/css/create.css">
+        <link rel="icon" href="{{ base_url() }}/images/Quisser.ico" />
+        <script src="https://unpkg.com/vue"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <style>
+        #sortable:hover {
+            cursor: pointer;
+        }
+        </style>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        
+        </script>
+    </head>
+    <body>
+        {% include 'templates/partials/navigation.twig' %}
+        <div class="container">
+            <div class="gradient"></div>
+            <div id="app">
+                <div class="settings">
+                    <p>Addtional settings</p>
+                    <label>Randomize questions</label>
+                    <input type="checkbox" v-model="randomizeQuestions" name="" value=""><br>
+                    <label>Randomize answers</label>
+                    <input type="checkbox" v-model="randomizeAnswers" name="" value=""><br>
+                </div>
+                <div class="flash-error"></div>
+                <header class="quizTitle">
+                    <label>Quiz Title</label>
+                    <input type="text" class="quizTitle">
+                </header>
+                <div class="table">
+                    <div id="sortable">
+                        <div v-for="(row, index) in questions" class="question">
+                            <div class="question-options">
+                                <div><button @click="addAnswer(index)">+</button></div>
+                                <div><input type="text" v-model="row.title" placeholder="Question"></div>
+                                <div>
+                                    <label class="fileContainer">
+                                        <input @change="setFilename($event, row)" :id="index" type="file" name="file" id="file" class="inputfile" />
+                                        <label for="file">${ row.file.name }</label>
+                                    </label>
+                                </div>
+                                <div>
+                                    <a v-on:click="removeElement(index);" style="cursor: pointer"><img class="remove-button" src="../images/delete.png" alt=""></a>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="answers">
+                                <div v-for="(answer, number) in questions[index].answers">
+                                    <input type="text" v-model="answer.answer" placeholder="Answer" class="answer">
+                                    <input type="checkbox" v-model="answer.isCorrect">
+                                    <a v-on:click="removeAnswer(index, number);" style="cursor: pointer"><img class="remove-button" src="../images/delete.png" alt=""></a>
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="button btn-primary" @click="addRow">Add Question</button>
+                    <button class="button btn-primary" @click="send">Create</button>
+
+                    {{
+                        csrf.field | raw
+                    }}
+
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                $( function() {
+                    $( "#sortable" ).sortable({
+                        scrollSpeed: 40
+                    });
+                    $( "#sortable" ).disableSelection();
+                } );
+
+                var app = new Vue({
+                    el: "#app",
+                    delimiters: ['${', '}'],
+                    data: {
+                        quizTitle: "",
+                        randomizeQuestions: false,
+                        randomizeAnswers: false,
+                        questions: [{
+                                title: "",
+                                answers: [],
+                                file: {
+                                    name: 'Image'
+                                }
+                            }],
+                    },
+                    methods: {
+                        addRow: function() {
+                            var elem = document.createElement('tr');
+                            this.questions.push({
+                                title: "",
+                                answers: [],
+                                file: {
+                                    name: 'Image'
+                                }
+                            });
+                        },
+                        addAnswer: function (index) {
+                            var elem = document.createElement('td');
+                            this.questions[index].answers.push({
+                                answer: "",
+                                isCorrect: false,
+
+                            });
+                        },
+                        removeElement: function(index) {
+                            this.questions.splice(index, 1);
+                        },
+                        removeAnswer: function(index, answer) {
+                            this.questions[index].answers.splice(answer, 1);
+                        },
+                        setFilename: function(event, row) {
+                            var file = event.target.files[0];
+                            row.file = file
+                        },
+                        send: () => {
+                            var inputs = document.querySelectorAll('input[type=text]');
+                            var element = document.querySelector('.flash-error');
+                                element.style.display = 'none';
+                            var flag = true;
+                            element.innerHTML = '';
+
+                            var errors = 'Uzupełnij pole ';
+
+
+                            inputs.forEach(function(item, index) {
+                                if (item.value == '') {
+                                    errors += (index + 1) + ' ';
+                                    flag = false;
+                                    return;
+                                } 
+                            });
+
+                            app.questions.forEach( (item, index) => {
+                                if (item.answers.length == 0 ) {
+                                    errors = 'Nie każde pytanie ma odpowiedź';
+                                    flag = false;
+                                    return;
+                                }
+                            })
+
+                            if (errors != 'Uzupełnij pole ') {
+                                var node = document.createTextNode(errors);
+                                element.appendChild(node);
+                                element.style.display = 'block';
+                                errors = 'Uzupełnij pole ';
+                            }
+
+                            if (app.questions.length == 0) {
+                                flag = false;
+                            }
+
+                            if (flag) {
+                                var pattern = JSON.stringify(app.questions);
+                                app.quizTitle = document.querySelector('.quizTitle').firstChild.innerHTML;
+                                $(document).ready(function() {
+                                    var token =  $('input[name="csrf_value"]').attr('value');
+                                    var name =  $('input[name="csrf_name"]').attr('value');
+                                    
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "./create",
+                                        data: {
+                                            csrf_name: name,
+                                            csrf_value: token,
+                                            pattern:  pattern,
+                                            randomizeAnswers: app.randomizeAnswers,
+                                            randomizeQuestions: app.randomizeQuestions,
+                                            quizTitle: app.quizTitle,
+                                        },
+                                        success: function(data) {
+                                            window.location.href = 'http://www.frizcode.me/';                                        
+                                        }
+                                    })
+                                });
+                            }
+                        }
+                    }
+                });
+
+            </script>
+        </div>
+
+        {% include 'templates/partials/footer.twig' %}
+    </body>
+</html>

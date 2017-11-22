@@ -15,34 +15,60 @@ html {
 html, body {
     width: 100%;
     height: 100%;
+    overflow: visible;
     overflow-x: hidden;
 }
 
 .wrapper__header {
-    height: 100px;
-    background-color: #011627;
+    background-color: rgb(118, 75, 162);
     color: #FFF;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    height: 52px;
+    z-index: 10;
+    position: sticky;
+    top: -1px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25), 0 8px 10px rgba(0,0,0,0.22);
 }
 
+.app__header {
+    font-size: 45px;
+    color: #fff;
+    z-index: 100;
+    padding: 15px;
+}
+
+.app {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    background-color: rgba(255,255,255,0.92);
+}
 
 .header__title {
+    font-family: 'Raleway', sans-serif;
     color: #FFF;
     text-align: center;
-    padding-bottom: 10px;
     font-size: 2em;
+    padding: 5px 10px;
 }
 
 .header__navigationList {
     display: flex;
-    font-size: 1.2em;
+    font-size: 0.9rem;
+}
+
+.navigation__item > a {
+    padding: 15px 0px;
 }
 
 .navigation__item {
+    padding: 0px 15px;
     text-align: center;
     flex: 1 1 50%;
+    font-family: 'Raleway', sans-serif;
+    width: 90px;
 }
 
 .navigation__item:first-of-type {
@@ -55,23 +81,21 @@ html, body {
 }
 
 .header__userNavigation {
-    display: flex;
-    justify-content: center;
+    font-family: 'Raleway', sans-serif;
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    background-color: #011627;
+    background-color: rgb(118, 75, 162);
     padding: 5px 0;
     color: #FFF;
     width: 100%;
     text-align: center;
+    font-family: 'Raleway', sans-serif;
 }
 
 .dropbtn {
     color: white;
-    background-color: #011627;
+    background-color: rgb(118, 75, 162);
     padding: 15px;
     padding-right: 4px;
     font-size: 1.2em;
@@ -81,7 +105,7 @@ html, body {
 
 .dropdown:hover {
     background-color: #f9f9f9;
-    color: #011627;
+    color: rgb(118, 75, 162);
 }
 
 .caret {
@@ -104,7 +128,6 @@ html, body {
     display: none;
     position: absolute;
     right: 0;
-    transform: translateX(7%);
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -121,10 +144,10 @@ html, body {
 
 .dropdown:hover .dropbtn {
     background-color: #f9f9f9;
-    color: #011627;
+    color: rgb(118, 75, 162);
 }
 
-.dropdown a:hover {background-color: #f1f1f1; color: #011627;}
+.dropdown a:hover {background-color: #f1f1f1; color: rgb(118, 75, 162);}
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -138,21 +161,46 @@ html, body {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    z-index: 5;
+}
+
+.gradient {
+    background: linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%);
+    opacity: 0.7;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.container {
+    background: url('../images/pattern.jpg') repeat;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
 }
 
 .wrapper__form {
     display: flex;
     flex-direction: column;
     min-width: 350px;
-    border: 1px solid #011627;
+    border: 1px solid rgb(118, 75, 162);
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .form__header {
     text-align: center;
-    background-color: #011627;
+    background-color: rgb(118, 75, 162);
     color: #FFF;
+    font-weight: 700;
     font-size: 1.5em;
     padding: 10px 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 .form__form {
@@ -163,11 +211,24 @@ html, body {
 
 .form__form > * {
     margin: 5px 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 .form__form > input {
-    padding: 5px 5px;
-    border: 0.7px solid #011627;
+    font-size: 1.1rem;
+    padding: 7px 10px;
+    font-family: 'Rokkitt', serif;
+
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.form__form > input:focus {
+    box-shadow: inset 0px -2px 0px 0px rgba(118, 75, 162, 0.75);
+    border-bottom: 1px solid rgb(118, 75, 162);
 }
 
 .form__form > label, .form__form > button {
@@ -176,14 +237,20 @@ html, body {
 
 .form__form > button {
     width: 100px;
+    margin-top: 30px;
     padding: 5px 15px;
-    background-color: #011627;
+    border: 1px solid rgb(118, 75, 162);
+    background-color: rgb(118, 75, 162);
     color: #FFF;
+
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
 }
 
 .form__form > button:hover {
-    border: 1px solid #011627;
-    color: #011627;
+    color: rgb(118, 75, 162);
     background-color: #FFF;
 }
 
@@ -213,12 +280,14 @@ html, body {
     color: cornflowerblue;
     background-color: lightcyan;
     border-color: cornflowerblue;
+    z-index: 100;
 }
 
 .alert__error {
     color: tomato;
     background-color: mistyrose;
     border-color: tomato;
+    z-index: 100;
 }
 
 
@@ -232,14 +301,19 @@ html, body {
         height: 52px;
     }
 
+    .header__title {
+        font-weight: 700;
+    }
+
     .dropdown-content {
-        transform: none;
         text-align: right;
     }
 
     .navigation__item {
         padding: 0 12px;
         flex: unset;
+        font-size: 1.1rem;
+        font-weight: 300;
     }
 
     .header__navigationList {

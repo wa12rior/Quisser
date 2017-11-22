@@ -1,0 +1,167 @@
+#app {
+    z-index: 9;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 15px 0;
+    max-width: 400px;
+}
+
+input[type=text] {
+    padding: 5px;
+}
+
+.flash-error {
+    padding: 5px 10px;
+    background-color: #FFF;
+    border: 1px solid tomato;
+    color: tomato;
+    display: none;
+}
+
+.quizTitle > label {
+    font-weight: 700;
+}
+
+.quizTitle {
+    font-size: 2rem;
+    margin: 10px 5px;
+}
+
+
+button {
+    border: rgb(118, 75, 162);
+    padding: 5px 15px;
+    margin: 5px;
+    transition: 0.3s ease;
+    background-color: rgb(118, 75, 162);
+    color: #FFF;
+}
+
+button:hover {
+    color: rgb(118, 75, 162);
+    background-color: #FFF;
+}
+
+.table {
+    margin: 5px;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid rgba(25, 55, 25, 0.2);
+}
+
+.question-options {
+    display: flex;
+    align-items: center;
+}
+
+.question-options > * {
+    margin-right: 10px;
+}
+
+.question-options > div:nth-child(4n + 2) {
+    flex: 1;
+}
+
+.question-options input[type=text] {
+    width: 100%;
+}
+
+.question-options:last-child {
+    margin-right: 0;
+}
+
+.answer {
+    margin: 5px 15px;
+    height: 25px;
+}
+
+td > a,label {
+    height: 100%;
+}
+
+.fileContainer [type=file] {
+    cursor: pointer;
+}
+
+.remove-button {
+    width: 20px;
+    padding: 5px;
+}
+
+.remove-button:hover {
+    background-color: rgba(25, 55, 25, 0.2);
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.settings {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9;
+    color: rgb(118, 75, 162);
+    padding: 10px 20px;
+}
+
+.settings > p {
+    font-size: 32px;
+    padding: 5px;
+}
+
+.settings > label {
+    padding: 5px;
+    font-size: 1.1rem;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(118, 75, 162);
+    display: inline-block;
+    transition: 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #FFF;
+    color: rgb(118, 75, 162);
+}
+
+.inputfile + label {
+    padding: 5px;
+	cursor: pointer;
+}
+
+@media (min-width: 700px) {
+    #app {
+        max-width: 800px;
+    }
+}
+
+@media (min-width: 1250px) {
+    .settings {
+        position: fixed;
+        padding: 100px 20px;
+        left: 0;
+        top: 0;
+        height: 100%;
+    }
+}

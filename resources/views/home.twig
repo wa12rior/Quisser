@@ -1,5 +1,17 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-    Hello
+{% if auth.check %}
+    {#Content if user is authenticated#}
+
+    <div class="app">
+        <header class="app__header">Hello {{ auth.user.name }}</header>
+        <div class="app__content"></div>
+    </div>
+
+{% else %}
+    {#Content if user is not authenticated#}
+
+
+{% endif %}
 {% endblock %}

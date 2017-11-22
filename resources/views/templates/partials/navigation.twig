@@ -6,7 +6,7 @@
                         <button class="dropbtn">{{ auth.user.name }}</button>
                         <span class="caret"></span>
                             <div class="dropdown-content">
-                                <a href="#">View profile</a>
+                                <a href="/{{ auth.user.name }}">View profile</a>
                                 <a href="{{ path_for('auth.password.change') }}">Change password</a>
                                 <a href="{{ path_for('auth.signout') }}">Sign out</a>
                             </div>

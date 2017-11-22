@@ -1,0 +1,135 @@
+html, body {
+    width: 100%;
+    height:100%;
+}
+
+.profile {
+    background-color: #FFF;
+    z-index: 1;   
+    border: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-top: 20px;
+}
+
+.profile__buttons {
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.profile__detailsGroup {
+    padding: 10px 15px;
+}
+
+.profile__details {
+    margin: 5px;
+}
+
+.detail__header {
+    font-size: 1.2rem;
+}
+
+.detail__content {
+    padding-top: 10px;
+    font-weight: 600;
+
+}
+
+.profile__buttons > *{
+    padding: 5px 10px;
+    margin: 5px;
+    color: #fff;
+    text-decoration: none;
+    background-color:  rgb(118, 75, 162);
+}
+
+.profile__buttons:hover {
+    cursor: pointer;
+}
+
+.profile__card {
+    flex: .7;
+
+    position: relative;
+    border: 1px solid #eee;
+    z-index: -2;
+}
+
+.profile__top {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: flex-end
+}
+
+.profile__topBackground {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: linear-gradient(90deg,#673AB7 0%, #9000A0 50%, #512DA8 100%);
+    background-size: 800% 800%;
+    -webkit-animation: Backgroundgradient 32s ease infinite;
+    -moz-animation: Backgroundgradient 32s ease infinite;
+    animation: Backgroundgradient 32s ease infinite;
+    z-index: -1;
+}
+
+.profile__avatar > img {
+    width: 110px;
+    height: 110px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 6rem;
+}
+
+.profile__avatar {
+    width: 125px;
+    height: 125px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    position: relative;
+    background-color: #fff;
+}
+
+@media (min-width: 768px) {
+    .profile__buttons {
+        justify-content: flex-end;
+    }
+
+    .profile__card {
+        flex: .5;
+    }
+}
+
+@media (min-width: 1024px) {
+    .profile__card {
+        flex: .3;
+    }
+}
+
+@-webkit-keyframes Backgroundgradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
+@-moz-keyframes Backgroundgradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
+@keyframes Backgroundgradient { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}

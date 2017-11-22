@@ -1,0 +1,58 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+    <div class="profile">
+            <div class="profile__card">
+                <div class="profile__top">
+                    <div class="profile__avatar">
+                        <img src="logo2.png" alt="+">
+                        {#<input type="" name="" value="">    #}
+                    </div>
+                    <div class="profile__topBackground"></div>
+                </div>
+                {% if auth.check %}
+                <div class="profile__buttons">
+                    <a href="#">Modify</a>
+                </div>
+                {% endif %}
+                <div class="profile__details">
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Name</header>
+                        <div class="detail__content">{{ user }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Email</header>
+                        <div class="detail__content">{{ email }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Full Name</header>
+                        <div class="detail__content">{{ fullName }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Description</header>
+                        <div class="detail__content">{{ description }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Born</header>
+                        <div class="detail__content">{{ dateOfBirth }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Age</header>
+                        <div class="detail__content">{{ age }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Location</header>
+                        <div class="detail__content">{{ location }}</div>
+                    </div>
+                    <div class="profile__detailsGroup">
+                        <header class="detail__header">Account created</header>
+                        <div class="detail__content">{{ created_at }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+{% endblock %}
