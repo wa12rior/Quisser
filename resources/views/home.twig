@@ -4,14 +4,17 @@
 {% if auth.check %}
     {#Content if user is authenticated#}
 
-    <div class="app">
-        <header class="app__header">Hello {{ auth.user.name }}</header>
-        <div class="app__content"></div>
+    <div class="app desktop-view">
+        <header class="app__header is-size-4-mobile is-size-2-tablet is-size-1">Hello {{ auth.user.name }}</header>
+        <div class="app__content">
+            <div class="quizzes__section is-size-5-mobile is-size-3-tablet is-size-2">My Quizzes</div>
+            <div class="quizzes__section is-size-5-mobile is-size-3-tablet is-size-2 is-uppercase">Recent Quizzes</div>
+        </div>
     </div>
 
 {% else %}
     {#Content if user is not authenticated#}
-
-
+    <script> window.location.href = 'https://www.frizcode.me/auth/signin'; </script>
+    :(
 {% endif %}
 {% endblock %}

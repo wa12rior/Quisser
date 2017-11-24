@@ -1,12 +1,34 @@
 {% if flash.getMessage('info') %}
 
 <span class="alert__span">
-        <div class="alert alert__info">{{ flash.getMessage('info') | first }}</div>
+        <div class="box">
+        <article class="media">
+        <div class="media-content">
+        <div class="content">
+                <p class="has-text-success">
+                {{ flash.getMessage('info') | first }}
+                </p>
+        </div>
+        </div>
+        </article>
+        </div>
 </span>
+
+
 {% endif %}
 
 {% if flash.getMessage('error') %}
 <span class="alert__span">
-        <div class="alert alert__error">{{ flash.getMessage('error') | first }}</div>
+        <div class="box">
+        <article class="media">
+        <div class="media-content">
+        <div class="content">
+                <p class="has-text-danger">
+                {{ flash.getMessage('error') | first }}
+                </p>
+        </div>
+        </div>
+        </article>
+        </div>
 </span>
 {% endif %}

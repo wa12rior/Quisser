@@ -1,27 +1,37 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-<div class="wrapper">
-                <div class="wrapper__form">
-                    <div class="form__header"> Login </div>
-                    <form class="form__form" method="post" action="{{ path_for('auth.signin') }}" autocomplete="off">
-                        <label class="form__label" for="email">Email</label>
-                        <input class="form__input{{ errors.email ? ' form__input--alert' : '' }}" type="email" name="email" id="email" placeholder="name@example.com" value="{{ old.email }}">
-                        {% if errors.email %}
-                        <span class="form__alert">{{ errors.email | first }}</span>
-                        {% endif %}
-                        <label class="form__label" for="password">Password</label>
-                        <input class="form__input{{ errors.password ? ' form__input--alert' : '' }}" type="password" name="password" id="password">
-                        {% if errors.password %}
-                        <span class="form__alert">{{ errors.password | first }}</span>
-                        {% endif %}
-                        
-                        <button type="submit">Sign in</button>
 
-                        {{
-                            csrf.field | raw
-                        }}
-                    </form>
-                </div>
-            </div>
+<form method="post" action="{{ path_for('auth.signin') }}" autocomplete="off">
+    <div class="container_">
+    <div class="box">
+        <div class="box__header">
+        Quisser
+        </div>
+        <div class="box__content">
+        <div class="input_">
+            <svg class="lnr lnr-user"><use xlink:href="#lnr-user"></use></svg>
+            <input class="form__input{{ errors.email ? ' form__input--alert' : '' }}" type="email" name="email" id="email" placeholder="Podaj Email" value="{{ old.email }}">
+            {% if errors.email %}
+            <p class="help is-danger">{{ errors.email | first }}</p>
+            {% endif %}
+        </div>
+        <div class="input_">
+            <svg class="lnr lnr-user"><use xlink:href="#lnr-lock"></use></svg>
+            <input class="form__input{{ errors.password ? ' form__input--alert' : '' }}" type="password" name="password" id="password" placeholder="Podaj Hasło">
+            {% if errors.password %}
+            <p class="help is-danger">{{ errors.password | first }}</p>
+            {% endif %}
+        </div>
+        </div>
+        <div class="box__footer">
+        <button class="btn btn--gradient" type="submit">Zaloguj</button>
+        {{
+                csrf.field | raw
+        }}
+        <a class="btn" href="{{ path_for('auth.signup') }}">Rejestracja</a>
+        </div>
+    </div>
+    </div>
+</form>
 {% endblock %}

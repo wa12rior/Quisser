@@ -17,14 +17,23 @@ class QuizController extends Controller {
         if ($quiz !== NULL) {
 
             $title = $quiz->getAttribute('title');
-            $question = $quiz->getAttribute('body');
+            $url = $quiz->getAttribute('URL');
+            $questions = json_decode($quiz->getAttribute('body'));
             $randomizeQuestions = $quiz->getAttribute('randomizeQuestions');
             $randomizeAnswers = $quiz->getAttribute('randomizeAnswers');
-            var_dump($question);
-            return;
-            // return $this->view->render($response, 'templates/quiz.twig', [
-            //     'name' => $quiz,
-            // ]);
+            
+            // echo '<pre>';
+            // var_dump($questions);
+            // echo '</pre>';
+            // return;
+            return $this->view->render($response, 'templates/quiz.twig', [
+                'author' => $args['name'],
+                'title' => $title,
+                'questions' => $questions,
+                'randomizeQuestions' => $randomizeQuestions,
+                'randomizeAnswers' => $randomizeAnswers,
+                'url' => $url,
+            ]);
         }
 
         $this->flash->addMessage('error', 'Wrong quiz path.');

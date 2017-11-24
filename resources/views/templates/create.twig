@@ -6,7 +6,8 @@
         <title>Quisser</title>
         
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/create.css">
@@ -20,26 +21,23 @@
         </style>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-        
-        </script>
     </head>
     <body>
         {% include 'templates/partials/navigation.twig' %}
-        <div class="container">
+        <div class="container_">
             <div class="gradient"></div>
             <div id="app">
                 <div class="settings">
-                    <p>Addtional settings</p>
+                    <p class="is-size-4-mobile is-size-3-tablet">Addtional settings</p>
                     <label>Randomize questions</label>
                     <input type="checkbox" v-model="randomizeQuestions" name="" value=""><br>
                     <label>Randomize answers</label>
                     <input type="checkbox" v-model="randomizeAnswers" name="" value=""><br>
                 </div>
                 <div class="flash-error"></div>
-                <header class="quizTitle">
+                <header class="title">
                     <label>Quiz Title</label>
-                    <input type="text" class="quizTitle">
+                    <input type="text" v-model="quizTitle" class="quizTitle">
                 </header>
                 <div class="table">
                     <div id="sortable">
@@ -54,7 +52,9 @@
                                     </label>
                                 </div>
                                 <div>
-                                    <a v-on:click="removeElement(index);" style="cursor: pointer"><img class="remove-button" src="../images/delete.png" alt=""></a>
+                                        <span>
+                                        <a v-on:click="removeElement(index);" style="cursor: pointer; " class="delete is-medium"></a>
+                                        </span>
                                     <br>
                                 </div>
                             </div>
@@ -62,14 +62,14 @@
                                 <div v-for="(answer, number) in questions[index].answers">
                                     <input type="text" v-model="answer.answer" placeholder="Answer" class="answer">
                                     <input type="checkbox" v-model="answer.isCorrect">
-                                    <a v-on:click="removeAnswer(index, number);" style="cursor: pointer"><img class="remove-button" src="../images/delete.png" alt=""></a>
+                                    <a v-on:click="removeAnswer(index, number);" style="cursor: pointer; vertical-align: middle;" class="delete is-medium"></a>
                                 </div>                         
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <button class="button btn-primary" @click="addRow">Add Question</button>
+                    <button class="button is-link btn-primary" @click="addRow">Add Question</button>
                     <button class="button btn-primary" @click="send">Create</button>
 
                     {{
@@ -170,7 +170,6 @@
 
                             if (flag) {
                                 var pattern = JSON.stringify(app.questions);
-                                app.quizTitle = document.querySelector('.quizTitle').firstChild.innerHTML;
                                 $(document).ready(function() {
                                     var token =  $('input[name="csrf_value"]').attr('value');
                                     var name =  $('input[name="csrf_name"]').attr('value');

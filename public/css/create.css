@@ -1,9 +1,9 @@
 #app {
     z-index: 9;
     padding: 50px;
-    background-color: rgba(255, 255, 255, 0.9);
     margin: 15px 0;
     max-width: 400px;
+    background: url('../images/dust_scratches.png') repeat;
 }
 
 input[type=text] {
@@ -29,21 +29,22 @@ input[type=text] {
 
 
 button {
-    border: rgb(118, 75, 162);
+    border: #3273dc;
     padding: 5px 15px;
     margin: 5px;
     transition: 0.3s ease;
-    background-color: rgb(118, 75, 162);
+    background-color: #3273dc;
     color: #FFF;
 }
 
 button:hover {
-    color: rgb(118, 75, 162);
+    color: #3273dc;
     background-color: #FFF;
 }
 
 .table {
     margin: 5px;
+    background-color: transparent;
 }
 
 .question {
@@ -102,15 +103,17 @@ td > a,label {
 }
 
 .settings {
-    width: 300px;
-    background-color: rgba(255, 255, 255, 0.9);
     z-index: 9;
-    color: rgb(118, 75, 162);
+    color: #000;
     padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+input[type=checkbox] {
+    margin-right: 15px;
 }
 
 .settings > p {
-    font-size: 32px;
     padding: 5px;
 }
 
@@ -132,7 +135,7 @@ td > a,label {
     font-size: 1.25em;
     font-weight: 700;
     color: white;
-    background-color: rgb(118, 75, 162);
+    background-color: #3273dc;
     display: inline-block;
     transition: 0.3s ease;
     max-width: 300px;
@@ -142,7 +145,7 @@ td > a,label {
 .inputfile:focus + label,
 .inputfile + label:hover {
     background-color: #FFF;
-    color: rgb(118, 75, 162);
+    color: #3273dc;
 }
 
 .inputfile + label {
@@ -158,10 +161,14 @@ td > a,label {
 
 @media (min-width: 1250px) {
     .settings {
+        width: 300px;
+        background: url('../images/dust_scratches.png') repeat;
+        opacity: 0.85;
         position: fixed;
         padding: 100px 20px;
         left: 0;
         top: 0;
         height: 100%;
+        margin-bottom: 0;
     }
 }

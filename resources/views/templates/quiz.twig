@@ -4,24 +4,74 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quisser</title>
-        
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
-        <link rel="stylesheet" href="{{ base_url() }}/css/profile.css">
         <link rel="icon" href="{{ base_url() }}/images/Quisser.ico" />
     </head>
-    <body>
+    <body style="height: initial;">
         {% include 'templates/partials/navigation.twig' %}
 
-        <div class="container">
+        <div class="container_">
             <div class="gradient"></div>
             {% include 'templates/partials/flash.twig' %}
-            Hello
-            {{ name }}
+            <div class="app" style="margin-top: 20px;">
+                <div class="app__quiz">
+                    <header class="is-size-3-mobile"><p class="is-size-1">{{ title }}</p><p class="is-size-6">Stworzony przez: {{ author }}</p></header><br>
+                    <div class="app__content">
+                        <form method="post" action="{{ path_for('check') }}">
+                            <input type="hidden" value="{{ url }}">
+                            <ol style="margin-left: 40px;">
+                                {% for key, question in questions %}
+                                    <li class="question is-size-3">
+                                        <p class="question__title"> {{ question.title }} <p>
+                                        <div class="question__answers is-size-5">
+                                            <ol>
+                                            {% for answer in question.answers %}
+                                                <li>
+                                                    <span>
+                                                        <input type="checkbox" name="answers[{{ key }}][{{ loop.index }}]" value="false" unchecked>
+                                                        {{ answer.answer }}
+                                                    </span>
+                                                </li>
+                                            {% endfor %}
+                                            </ol>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                            <button type="submit" class="button is-link" style="margin: 20px 0;">Skończ</button>
+                            {{
+                                csrf.field | raw
+                            }}
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         {% include 'templates/partials/footer.twig' %}
+
+        {#<script src="https://code.jquery.com/jquery-1.12.4.js"></script>#}
+        {#<script>
+            $(document).ready(function() {
+                var token =  $('input[name="csrf_value"]').attr('value');
+                var name =  $('input[name="csrf_name"]').attr('value');
+                
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data: {
+                        csrf_name: name,
+                        csrf_value: token,
+                    },
+                    success: function(data) {
+                        window.location.href = 'http://www.frizcode.me/results';                                        
+                    }
+                })
+            });
+        </script>#}
     </body>
 </html>

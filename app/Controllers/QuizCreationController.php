@@ -20,18 +20,21 @@ class QuizCreationController extends Controller {
         $pattern = $_POST['pattern'];
         $quizTitle = $_POST['quizTitle'];
 
-        $url = User::find($_SESSION['user'])->getAttribute('name') . '/' . strval($_SESSION['user'] + ($_SESSION['user'] * 200) + time());
+        $slug = explode(' ', strtolower($quizTitle));
+        $slug = implode('-', $slug);
+
+        $url = User::find($_SESSION['user'])->getAttribute('name') . '/' . $slug . '.';
 
         $quiz = Quiz::create([
             'title' => $quizTitle,
             'body' => $pattern,
             'randomize_questions' => $randomize['questions'],
             'randomize_answers' => $randomize['answers'],
-            'URL' => $url,
             'user_id' => $_SESSION['user']
         ]);
 
-        $this->flash->addMessage('info', 'You have created quiz with url https://www.frizcode.me/' . $url);
-
+        $quiz->url = $url . $quiz->id;
+        $quiz->save();
+        $this->flash->addMessage('info', 'You have created quiz with url https://www.frizcode.me/' . $quiz->url);
     }
 }

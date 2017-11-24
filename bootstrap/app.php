@@ -79,6 +79,14 @@ $container['QuizCreationController'] = function($container) {
     return new \App\Controllers\QuizCreationController($container);
 };
 
+$container['QuizModifyController'] = function($container) {
+    return new \App\Controllers\QuizCreationController($container);
+};
+
+$container['QuizHandlerController'] = function($container) {
+    return new \App\Controllers\QuizHandlerController($container);
+};
+
 $container['QuizController'] = function($container) {
     return new \App\Controllers\QuizController($container);
 };

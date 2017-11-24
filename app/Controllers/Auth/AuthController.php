@@ -23,7 +23,7 @@ class AuthController extends Controller {
         );
 
         if (!$auth) {
-            $this->flash->addMessage('error', 'Wrong credentials.');
+            $this->flash->addMessage('error', 'Złe dane użytkownika.');
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
 
@@ -53,9 +53,9 @@ class AuthController extends Controller {
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
 
-        $this->flash->addMessage('info', 'You have been signed up.');
+        $this->flash->addMessage('info', 'Twoje konto zostało pomyślnie utworzone!');
         // sign in immediately after the signup
-        // $this->auth->attempt($user->email, $request->getParam('password'));
+        $this->auth->attempt($user->email, $request->getParam('password'));
 
         return $response->withRedirect($this->router->pathFor('home'));
     }
