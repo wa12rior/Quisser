@@ -5,19 +5,19 @@
     {#Content if user is authenticated#}
 
     <div class="app desktop-view">
-        <header class="app__header is-size-4-mobile is-size-2-tablet is-size-1">Witaj {{ auth.user.name }}!</header>
         <div class="app__content">
-            <div class="quizzes__section is-size-5-mobile is-size-3-tablet is-size-2">Nowe Quizy</div>
+            <header class="is-size-5-mobile is-size-3-tablet is-size-2">Moje Quizy</header>
+            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Stworzone Quizy</div>
             <div class="section__new">
-                {% for title in new["titles"] %}
+                {% for title in created["titles"] %}
                         <div class="new__quiz">
                             <p>{{ loop.index }}</p>
-                            <p>Autor: {{ new["authors"][loop.index - 1] }}</p>
-                            <a class="button is-dark" href="https://www.frizcode.me/{{ new["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
+                            <a class="button is-dark" href="https://www.frizcode.me/{{ created["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
+                            <strong>{{ created["created"][loop.index - 1] }}</strong>
                         </div>
                 {% endfor %}
             </div>
-            <div class="quizzes__section is-size-6-mobile is-size-3-tablet is-size-2">Ostatnio Przeglądane Quizy</div>
+            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Wykonane Quizy</div>
             <div class="section__new">
                 {% for title in history["titles"] %}
                         <div class="new__quiz">

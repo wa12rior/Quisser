@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\History;
 use Slim\Views\Twig as View;
 
 class QuizController extends Controller {
@@ -19,19 +20,32 @@ class QuizController extends Controller {
             $title = $quiz->getAttribute('title');
             $url = $quiz->getAttribute('URL');
             $questions = json_decode($quiz->getAttribute('body'));
-            $randomizeQuestions = $quiz->getAttribute('randomizeQuestions');
-            $randomizeAnswers = $quiz->getAttribute('randomizeAnswers');
-            
-            // echo '<pre>';
-            // var_dump($questions);
-            // echo '</pre>';
-            // return;
+            $randomizeQuestions = $quiz->getAttribute('randomize_questions');
+            $randomizeAnswers = $quiz->getAttribute('randomize_answers');
+            $multipleChoice = $quiz->getAttribute('multiple_choice');
+            $slideQuestions = $quiz->getAttribute('slide_questions');
+             
+            $history = History::create([
+                'user_id' => $_SESSION['user'],
+                'quiz_id' => $quiz->getAttribute('id')
+            ]);
+
+            $count = History::count();
+
+            $history = History::where('user_id', $_SESSION['user'])->orderBy('id', 'desc')->take($count)->skip(5)->get();
+
+            foreach($history as $die) {
+                History::where('id', $die->id)->delete();
+            }
+
             return $this->view->render($response, 'templates/quiz.twig', [
                 'author' => $args['name'],
                 'title' => $title,
                 'questions' => $questions,
                 'randomizeQuestions' => $randomizeQuestions,
                 'randomizeAnswers' => $randomizeAnswers,
+                'multipleChoice' => $multipleChoice,
+                'slideQuestions' => $slideQuestions,
                 'url' => $url,
             ]);
         }

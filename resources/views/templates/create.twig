@@ -6,7 +6,6 @@
         <title>Quisser</title>
         
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
@@ -24,19 +23,31 @@
     </head>
     <body>
         {% include 'templates/partials/navigation.twig' %}
-        <div class="container_">
+        <div class="container_" style="justify-content: flex-start;">
             <div class="gradient"></div>
             <div id="app">
                 <div class="settings">
-                    <p class="is-size-4-mobile is-size-3-tablet">Addtional settings</p>
-                    <label>Randomize questions</label>
-                    <input type="checkbox" v-model="randomizeQuestions" name="" value=""><br>
-                    <label>Randomize answers</label>
-                    <input type="checkbox" v-model="randomizeAnswers" name="" value=""><br>
+                    <p class="is-size-4-mobile is-size-3-tablet">Ustawienia</p>
+                    <span>
+                        <label>Pytania losowo</label>
+                        <input type="checkbox" v-model="randomizeQuestions" name="" value=""><br>
+                    </span>
+                    <span>
+                        <label>Odpowiedzi losowo</label>
+                        <input type="checkbox" v-model="randomizeAnswers" name="" value=""><br>
+                    </span>
+                    <span>
+                        <label>Quiz wielokrotnego wyboru</label>
+                        <input type="checkbox" v-model="multipleChoice" name="" value=""><br>
+                    </span>
+                    <span>
+                        <label>Wyświetlaj po 1 pytaniu</label>
+                        <input type="checkbox" v-model="slideQuestions" name="" value=""><br>
+                    </span>
                 </div>
-                <div class="flash-error"></div>
+                <div class="help has-text-danger is-size-4"></div>
                 <header class="title">
-                    <label>Quiz Title</label>
+                    <label>Tytuł Quizu</label>
                     <input type="text" v-model="quizTitle" class="quizTitle">
                 </header>
                 <div class="table">
@@ -44,7 +55,7 @@
                         <div v-for="(row, index) in questions" class="question">
                             <div class="question-options">
                                 <div><button @click="addAnswer(index)">+</button></div>
-                                <div><input type="text" v-model="row.title" placeholder="Question"></div>
+                                <div><input type="text" v-model="row.title" placeholder="Pytanie"></div>
                                 <div>
                                     <label class="fileContainer">
                                         <input @change="setFilename($event, row)" :id="index" type="file" name="file" id="file" class="inputfile" />
@@ -60,7 +71,7 @@
                             </div>
                             <div class="answers">
                                 <div v-for="(answer, number) in questions[index].answers">
-                                    <input type="text" v-model="answer.answer" placeholder="Answer" class="answer">
+                                    <input type="text" v-model="answer.answer" placeholder="Odpowiedź" class="answer">
                                     <input type="checkbox" v-model="answer.isCorrect">
                                     <a v-on:click="removeAnswer(index, number);" style="cursor: pointer; vertical-align: middle;" class="delete is-medium"></a>
                                 </div>                         
@@ -94,11 +105,13 @@
                         quizTitle: "",
                         randomizeQuestions: false,
                         randomizeAnswers: false,
+                        multipleChoice: false,
+                        slideQuestions: false,
                         questions: [{
                                 title: "",
                                 answers: [],
                                 file: {
-                                    name: 'Image'
+                                    name: 'Obraz'
                                 }
                             }],
                     },
@@ -109,7 +122,7 @@
                                 title: "",
                                 answers: [],
                                 file: {
-                                    name: 'Image'
+                                    name: 'Obraz'
                                 }
                             });
                         },
@@ -133,7 +146,7 @@
                         },
                         send: () => {
                             var inputs = document.querySelectorAll('input[type=text]');
-                            var element = document.querySelector('.flash-error');
+                            var element = document.querySelector('.help');
                                 element.style.display = 'none';
                             var flag = true;
                             element.innerHTML = '';
@@ -180,13 +193,15 @@
                                         data: {
                                             csrf_name: name,
                                             csrf_value: token,
-                                            pattern:  pattern,
+                                            pattern: pattern,
                                             randomizeAnswers: app.randomizeAnswers,
                                             randomizeQuestions: app.randomizeQuestions,
+                                            multipleChoice: app.multipleChoice,
+                                            slideQuestions: app.slideQuestions,
                                             quizTitle: app.quizTitle,
                                         },
                                         success: function(data) {
-                                            window.location.href = 'http://www.frizcode.me/';                                        
+                                            window.location.href = 'http://www.frizcode.me/';
                                         }
                                     })
                                 });

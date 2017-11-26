@@ -13,14 +13,14 @@
             <svg class="lnr lnr-user" style="color: red;"><use xlink:href="#lnr-lock"></use></svg>
             <input class="form__input{{ errors.password_old ? ' form__input--alert' : '' }}" type="password" name="password_old" id="password_old" placeholder="Obecne hasło">
             {% if errors.password_old %}
-            <span class="form__alert">{{ errors.password_old | first }}</span>
+            <p class="help is-danger">{{ errors.password_old | first }}</p>
             {% endif %}
         </div>
         <div class="input_">
             <svg class="lnr lnr-user" style="color: green;"><use xlink:href="#lnr-lock"></use></svg>
             <input class="form__input{{ errors.password ? ' form__input--alert' : '' }}" type="password" name="password" id="password" placeholder="Nowe hasło">
             {% if errors.password %}
-            <span class="form__alert">{{ errors.password | first }}</span>
+            <p class="help is-danger">{{ errors.password | first }}</p>
             {% endif %}
         </div>
         </div>

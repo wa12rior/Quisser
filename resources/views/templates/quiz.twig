@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quisser</title>
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
@@ -21,19 +20,27 @@
                 <div class="app__quiz">
                     <header class="is-size-3-mobile"><p class="is-size-1">{{ title }}</p><p class="is-size-6">Stworzony przez: {{ author }}</p></header><br>
                     <div class="app__content">
+                        <input type="hidden" class="rand"  value="{{ randomizeQuestions }}">
+                        <input type="hidden" class="rand"  value="{{ randomizeAnswers }}">
+                        <input type="hidden" class="slide"  value="{{ slideQuestions }}">
                         <form method="post" action="{{ path_for('check') }}">
-                            <input type="hidden" value="{{ url }}">
-                            <ol style="margin-left: 40px;">
+                            <input type="hidden" name="url" value="{{ url }}">
+                            <ol class="questions" style="margin-left: 40px;">
                                 {% for key, question in questions %}
                                     <li class="question is-size-3">
                                         <p class="question__title"> {{ question.title }} <p>
                                         <div class="question__answers is-size-5">
-                                            <ol>
+                                            <ol class="answers">
                                             {% for answer in question.answers %}
-                                                <li>
+                                                <li type="A">
                                                     <span>
-                                                        <input type="checkbox" name="answers[{{ key }}][{{ loop.index }}]" value="false" unchecked>
+                                                        {% if multipleChoice %}
+                                                        <input type="checkbox" value="false" name="answers[{{ key }}]">
                                                         {{ answer.answer }}
+                                                        {% else %}
+                                                        <input type="radio" value="false" name="answers[{{ key }}]">
+                                                        {{ answer.answer }}
+                                                        {% endif %}
                                                     </span>
                                                 </li>
                                             {% endfor %}
@@ -42,10 +49,18 @@
                                     </li>
                                 {% endfor %}
                             </ol>
-                            <button type="submit" class="button is-link" style="margin: 20px 0;">Skończ</button>
-                            {{
-                                csrf.field | raw
-                            }}
+                            <div class="buttons">
+                                {% if slideQuestions %}
+                                <div class="buttons__slide">
+                                    <button class="button previous" style="margin: 20px 0;">Poprzednie</button>
+                                    <button class="button next" style="margin: 20px 0;">Następne</button>
+                                </div>
+                                {% endif %}
+                                <button type="submit" class="button is-link" style="margin: 20px 0;">Skończ</button>
+                                {{
+                                    csrf.field | raw
+                                }}
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -53,6 +68,82 @@
         </div>
 
         {% include 'templates/partials/footer.twig' %}
+
+        <script>
+            function randElements(container) {
+                for (let i = container.children.length; i >= 0; i--) {
+                    container.appendChild(container.children[Math.random() * i | 0]);
+                }
+            }
+
+            function slideQuestion(element, direction) {
+                element.addEventListener('click', (event) => {
+                    event.preventDefault();
+    
+                    questions[currentSlide].style.display = 'none';
+                    if (currentSlide + direction < 0) {
+                        currentSlide = questions.length - 1;
+                    } else if (currentSlide + direction > ( questions.length - 1)) {
+                        currentSlide = 0;
+                    } else {
+                        currentSlide += direction;
+                    }
+
+                    questions[currentSlide].style.display = 'block';
+                });
+            }
+
+            let checkboxes = document.querySelectorAll('input[type=checkbox]');
+            
+            let rand = [
+                document.querySelectorAll('.rand')[0],
+                document.querySelectorAll('.rand')[1]
+            ];
+
+            let slide = document.querySelector('.slide');
+            let currentSlide = 0;
+            let buttonNext = document.querySelector('.next');
+            let buttonPrevious = document.querySelector('.previous');
+
+            let questionsWrapper = document.querySelector('.questions');
+            let questions = document.querySelectorAll('.question');
+            let answers = document.querySelectorAll('.answers');
+
+            if (rand[0].value) {
+                randElements(questionsWrapper);
+            }
+
+            if (rand[1].value) {
+                answers.forEach( (item) => {
+                    randElements(item);
+                })
+            }
+
+            if (slide.value) {
+                questions.forEach( (item, index) => {
+                    let title = document.querySelectorAll('.question__title')[index];
+                    item.style.display = 'none';
+                    title.style.transform = 'translateX(-40px)';
+                    title.innerHTML = (index + 1) + ". " + title.innerHTML;
+                });
+
+                questions[0].style.display = 'block';
+
+                slideQuestion(buttonNext, 1);
+                slideQuestion(buttonPrevious, -1);
+            }
+
+            checkboxes.forEach( (item, index) => {
+                item.addEventListener('click', () => {
+                    if (item.checked) {
+                        item.value = true;
+                    } else {
+                        item.value = false;
+                    }
+                });
+            });
+
+        </script>
 
         {#<script src="https://code.jquery.com/jquery-1.12.4.js"></script>#}
         {#<script>

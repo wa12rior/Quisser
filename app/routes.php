@@ -19,6 +19,8 @@ $app->group('', function () {
 
     $this->get('/create', 'QuizCreationController:index')->setName('create');
     $this->post('/create', 'QuizCreationController:postQuiz');
+
+    $this->get('/myQuizzes', 'UserQuizzesController:index')->setName('myQuizzes');
     
     $this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
 

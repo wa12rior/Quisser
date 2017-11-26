@@ -27,12 +27,14 @@ html, body {
 }
 
 .detail__header {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+    font-weight: 400 !important;
 }
 
 .detail__content {
     padding-top: 10px;
     font-weight: 600;
+    font-size: .9rem;
 
 }
 

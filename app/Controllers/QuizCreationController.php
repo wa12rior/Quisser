@@ -13,9 +13,12 @@ class QuizCreationController extends Controller {
 
     public function postQuiz($request, $response) {
         $randomize = [
-            'questions' => $_POST['randomizeQuestions'] ? 1 : 0,
-            'answers' => $_POST['randomizeAnswers'] ? 1 : 0,
+            'questions' => ($_POST['randomizeQuestions'] == 'true') ? 1 : 0,
+            'answers' => ($_POST['randomizeAnswers'] == 'true') ? 1 : 0,
         ];
+
+        $multipleChoice = ($_POST['multipleChoice'] == 'true') ? 1 : 0;
+        $slideQuestions = ($_POST['slideQuestions'] == 'true') ? 1 : 0;
 
         $pattern = $_POST['pattern'];
         $quizTitle = $_POST['quizTitle'];
@@ -30,9 +33,13 @@ class QuizCreationController extends Controller {
             'body' => $pattern,
             'randomize_questions' => $randomize['questions'],
             'randomize_answers' => $randomize['answers'],
+            'multiple_choice' => $multipleChoice,
+            'slide_questions' => $slideQuestions,
             'user_id' => $_SESSION['user']
         ]);
 
+        $quiz->multiple_choice = $multipleChoice;
+        $quiz->slide_questions = $slideQuestions;
         $quiz->url = $url . $quiz->id;
         $quiz->save();
         $this->flash->addMessage('info', 'You have created quiz with url https://www.frizcode.me/' . $quiz->url);

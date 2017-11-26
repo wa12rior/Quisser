@@ -1,5 +1,5 @@
 {% if auth.check %}
-<nav class="navbar is-white" style="z-index: 100; position: sticky; top: -1px;">
+<nav class="navbar is-white" style="z-index: 100; position: sticky; top: -5px;">
             <div class="navbar-brand">
                 <a class="navbar-item" href="{{ path_for('home') }}">
                 <img src="../images/quisser.png" alt="quisser" width="112" height="28">
@@ -19,22 +19,22 @@
                     </a>
                     <div class="navbar-dropdown is-right">
                     <a class="navbar-item" style="color: indigo;" href="{{ path_for('create') }}">
-                        Create Quiz
+                        Stwórz Quiz
                     </a>
                     <hr class="navbar-divider">
                     <a class="navbar-item " href="/{{ auth.user.name }}">
-                        Profile
+                        Profil
                     </a>
-                    <a class="navbar-item " href="#">
-                        My quizzes
+                    <a class="navbar-item " href="{{ path_for('myQuizzes') }}">
+                        Moje Quizy
                     </a>
                     <a class="navbar-item " href="{{ path_for('auth.password.change') }}">
-                        Change Password
+                        Zmień Hasło
                     </a>
                     <hr class="navbar-divider">
                     
                         <a style="color: skyblue;" class="navbar-item" href="{{ path_for('auth.signout') }}">
-                            Logout
+                            Wyloguj
                         </a>
                     </div>
                 </div>
