@@ -1,6 +1,5 @@
 html {
     font-size: 16px;
-    letter-spacing: 0.5px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&subset=latin-ext');
@@ -26,9 +25,13 @@ html {
   position: absolute;
   background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 }
-
+/*
 body {
   font-family: 'Roboto', sans-serif !important;
+}*/
+
+.hidden {
+  display: none !important;
 }
 
 .container_ {
@@ -135,6 +138,7 @@ body {
     padding: 0 15px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     flex: 6;
 }
 
@@ -144,19 +148,20 @@ body {
 }
 
 .question__title {
+    font-size: 1rem;
     margin: 10px;
+    width: 100%;
 }
 
 .question__answers {
-    margin: 5px 20px;
+    /*margin: 5px 20px;*/
+    font-size: .8rem;
 }
 
 .app {
-    background: url('../images/dust_scratches.png') repeat;
     display: flex;
     width: 80%;
     height: 90%;
-    background-color: #FFF;
     z-index: 1;
     border-radius: 4px;
 }
@@ -181,9 +186,15 @@ body {
     flex-direction: column;
 }
 
+.app__header, .quizzes__section {
+  text-align: center;
+  color: #FFF;
+}
+
 .section__new {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  
   flex-flow: row wrap;
 }
 
@@ -196,13 +207,68 @@ body {
   justify-content: space-between;
 }
 
-@media (min-width: 768px) {
-    .alert {
-        width: 500px;
-    }
-
-    .desktop-view {
-      flex-direction: row;
-    }
-
+.buttons__slide {
+  display: flex;
 }
+
+.card {
+  min-width: 300px;
+  flex: 1;
+  margin: 10px !important;
+}
+
+.title {
+  font-size: 1.2rem;
+  padding-top: 5px;
+}
+
+.author {
+  font-size: .6rem;
+}
+
+.dateTime {
+  font-size: .9em;
+}
+
+@media (min-width: 960px) {
+    .title {
+      font-size: 2rem;
+    }
+
+    .author {
+      font-size: 1rem;
+    }
+
+    .question, .question__title {
+      font-size: 1.4rem;
+    }
+
+    .question__answers {
+      font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .card {
+    width: 450px;
+  }
+}
+
+@media (min-width: 769px) {
+  .alert {
+    width: 500px;
+  }
+
+  
+  .desktop-view {
+    flex-direction: row;
+  }
+  
+}
+
+@media (min-width: 1024px) {
+
+  .app__header, .quizzes__section {
+    text-align: left;
+  }
+} 

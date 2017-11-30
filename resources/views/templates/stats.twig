@@ -1,0 +1,62 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+{% if auth.check %}
+    {#Content if user is authenticated#}
+<div class="app">
+
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Lp.</th>
+        <th>Użytkownik</th>
+        <th>Poprawne</th>
+        <th>%</th>
+        <th>Niepoprawne</th>
+        <th>%</th>
+        <th>Ilość Wszystkich Poprawnych</th>
+        <th>Ilość Wszystkich Niepoprawnych</th>
+        <th>Liczba Wszystkich Odpowiedzi</th>
+        <th>Data i godzina wykonywania Quizu</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for name in names %}
+        <tr class="row">
+            <th>{{ loop.index }}</th>
+            <td><a href="https://www.frizcode.me/{{ name }}">{{ name }}</a>
+            </td>
+            <td>{{ userCorrect[loop.index - 1] }}</td>
+            <td>{{ ((userCorrect[loop.index - 1] / correct[loop.index - 1] )*100)|round(2, 'floor') }}%</td>
+            <td>{{ userWrong[loop.index - 1] }}</td>
+            <td>{{ ((userWrong[loop.index - 1] / wrong[loop.index - 1] )*100)|round(2, 'floor') }}%</td>
+            <td>{{ correct[loop.index - 1] }}</td>
+            <td>{{ wrong[loop.index - 1] }}</td>
+            <td>{{ allAnswers[loop.index - 1] }}</td>
+            <td>{{ created[loop.index - 1] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<script>
+    let row = document.querySelectorAll('.row');
+
+    row.forEach( (item) => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('mouseenter', () => {
+            item.classList.toggle('is-selected');
+        })
+        item.addEventListener('mouseleave', () => {
+            item.classList.toggle('is-selected');
+        })
+    })
+</script>
+
+{% else %}
+    {#Content if user is not authenticated#}
+    <script> window.location.href = 'https://www.frizcode.me/auth/signin'; </script>
+    :(
+{% endif %}
+{% endblock %}

@@ -2,7 +2,6 @@
     z-index: 9;
     padding: 50px;
     margin: 15px 0;
-    max-width: 400px;
     background: url('../images/dust_scratches.png') repeat;
 }
 
@@ -28,8 +27,8 @@ input[type=text] {
     max-width: 100%;
 }
 
-.answer {
-    max-width: 60%;
+.quizTitle input {
+    font-size: 1.4rem;
 }
 
 button {
@@ -68,8 +67,15 @@ button:hover {
     margin-right: 10px;
 }
 
-.question-options > div:nth-child(4n + 2) {
+.question-options > div:nth-child(4n + 1) {
     flex: 1;
+}
+
+.upload {
+    display: flex; 
+    flex: 1; 
+    justify-content: center; 
+    align-items: center;
 }
 
 .question-options input[type=text] {
@@ -82,20 +88,15 @@ button:hover {
 
 .answer {
     margin: 5px 15px;
-    height: 25px;
 }
 
-td > a,label {
-    height: 100%;
+.answers {
+    display: flex;
+    flex-direction: column;
 }
 
 .fileContainer [type=file] {
     cursor: pointer;
-}
-
-.remove-button {
-    width: 20px;
-    padding: 5px;
 }
 
 .remove-button:hover {
@@ -126,53 +127,19 @@ input[type=checkbox] {
     font-size: 1.1rem;
 }
 
-.inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
-}
-
-.inputfile + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: #3273dc;
-    display: inline-block;
-    transition: 0.3s ease;
-    max-width: 300px;
-    word-wrap: break-word;
-}
-
-.inputfile:focus + label,
-.inputfile + label:hover {
-    background-color: #FFF;
-    color: #3273dc;
-}
-
-.inputfile + label {
-    padding: 5px;
-	cursor: pointer;
-}
-
 @media (min-width: 700px) {
     #app {
         max-width: 800px;
+    }
+
+    .answers {
+        flex-direction: row;
     }
 }
 
 @media (min-width: 1250px) {
     .settings {
         width: 300px;
-        background: url('../images/dust_scratches.png') repeat;
-        opacity: 0.85;
-        position: fixed;
-        padding: 100px 20px;
-        left: 0;
-        top: 0;
-        height: 100%;
         margin-bottom: 0;
     }
 }

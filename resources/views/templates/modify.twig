@@ -20,7 +20,7 @@
             cursor: pointer;
         }
         </style>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body>
@@ -33,29 +33,25 @@
                 
                     <label class="checkbox is-size-6-touch">
                         <input type="checkbox" v-model="randomizeQuestions" name="" value="">
-                        Pytania wyświetlane losowo
+                        Pytania losowo
                     </label>
                 
             
                     <label class="checkbox">
                         <input type="checkbox" v-model="randomizeAnswers" name="" value="">
-                        Odpowiedzi wyświetlane losowo
+                        Odpowiedzi losowo
                     </label>
                 
             
                     <label class="checkbox">
                         <input type="checkbox" v-model="multipleChoice" name="" value="">
-                        Quiz wielokrotnego wyboru
-                        <i style="font-size: .8em;">(domyślnie: jednokrotnego)</i>
+                        Quiz wielokrotnego (domyślnie: jednokrotnego) wyboru
                     </label>
                 
             
                     <label class="checkbox">
                         <input type="checkbox" v-model="slideQuestions" name="" value="">
-                        Wyświetlaj po 1 pytaniu 
-                        <i style="font-size: .8em;">
-                        (domyślnie wszystkie na jednej stronie)
-                        </i>
+                        Wyświetlaj po 1 pytaniu
                     </label>
                     
                 </div>
@@ -65,57 +61,60 @@
                     <input type="text" v-model="quizTitle" class="quizTitle">
                 </header>
                 <div class="table">
-                    <form enctype="multipart/form-data">
-                        
-                        <div id="sortable">
-                            <div v-for="(row, index) in questions" class="question" id="form">
-                                <div class="question-options">
-                                    <div><input type="text" v-model="row.title" class="q" placeholder="Pytanie"></div>
-                                    <div><button class="button is-info is-outlined" @click="addAnswer(index, $event)" style="font-weight: 700;">+ Odp</button></div>
-                                    <div>
-                                            <span>
-                                            <a v-on:click="removeElement(index);" style="cursor: pointer; " class="delete is-medium"></a>
-                                            </span>
-                                        <br>
-                                    </div>
+                    <div id="sortable">
+                        <div v-for="(row, index) in questions" class="question">
+                            <div class="question-options">
+                                <div><input type="text" v-model="row.title" class="q" placeholder="Pytanie"></div>
+                                <div><button class="button is-info is-outlined" @click="addAnswer(index)">+ Odp</button></div>
+                                <div>
+                                        <span>
+                                        <a v-on:click="removeElement(index);" style="cursor: pointer; " class="delete is-medium"></a>
+                                        </span>
+                                    <br>
                                 </div>
-                                <div class="answers">
-                                    <div style="flex: 2;">
-                                        <div v-for="(answer, number) in questions[index].answers">
-                                            <input type="text" v-model="answer.answer" placeholder="Odpowiedź" class="answer">
-                                            <input type="checkbox" v-model="answer.isCorrect">
-                                            <a v-on:click="removeAnswer(index, number);" style="cursor: pointer; vertical-align: middle;" class="delete is-medium"></a>
-                                        </div>                         
-                                    </div>
-                                    <div class="upload">
-                                        <label class="fileContainer">
-                                            <div class="file is-info is-small has-name is-boxed">
-                                                <label class="file-label">
-                                                    <input @change="setFilename($event, row)" :id="index" class="file-input" type="file" name="images[]" multiple="multiple">
-                                                    <span class="file-cta" style="padding: 2px;">
-                                                    <span class="file-icon">
-                                                        <i class="fa fa-upload"></i>
-                                                    </span>
-                                                    <span class="file-label">
-                                                        Wybierz obraz
-                                                    </span>
-                                                    </span>
-                                                    <span class="file-name" style="max-width: 8em;">
-                                                    ${ row.file.name }
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </label>
-                                    </div>
+                            </div>
+                            <div class="answers">
+                                <div style="flex: 2;">
+                                    <div v-for="(answer, number) in questions[index].answers">
+                                        <input type="text" v-model="answer.answer" placeholder="Odpowiedź" class="answer">
+                                        <input type="checkbox" v-model="answer.isCorrect">
+                                        <a v-on:click="removeAnswer(index, number);" style="cursor: pointer; vertical-align: middle;" class="delete is-medium"></a>
+                                    </div>                         
+                                </div>
+                                <div class="upload">
+                                    <label class="fileContainer">
+                                        <div class="file is-info is-small has-name is-boxed">
+                                            <label class="file-label">
+                                                <input @change="setFilename($event, row)" :id="index" class="file-input" type="file" name="resume">
+                                                <span class="file-cta" style="padding: 2px;">
+                                                <span class="file-icon">
+                                                    <i class="fa fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Wybierz obraz
+                                                </span>
+                                                </span>
+                                                <span class="file-name" style="max-width: 8em;">
+                                                ${ row.file.name }
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                    
-                    </form>
+                    </div>
                 </div>
+                <input type="hidden" id="body" value="{{ body }}">
+                <input type="hidden" id="title" value="{{ title }}">
+                <input type="hidden" id="rQ" value="{{ randQ }}">
+                <input type="hidden" id="rA" value="{{ randA }}">
+                <input type="hidden" id="mtp" value="{{ mtp }}">
+                <input type="hidden" id="slide" value="{{ slide }}">
+                <input type="hidden" id="url" value="{{ url }}">
                 <div>
                     <button class="button is-link btn-primary" @click="addRow">Dodaj pytanie</button>
-                    <button class="button btn-primary" type="submit" @click="send($event)">Utwórz</button>
+                    <button class="button btn-primary" @click="send">Modyfikuj</button>
 
                     {{
                         csrf.field | raw
@@ -132,22 +131,18 @@
                     $( "#sortable" ).disableSelection();
                 } );
 
+                let parsedBody = JSON.parse(body.value);
+
                 var app = new Vue({
                     el: "#app",
                     delimiters: ['${', '}'],
                     data: {
-                        quizTitle: "",
-                        randomizeQuestions: false,
-                        randomizeAnswers: false,
-                        multipleChoice: false,
-                        slideQuestions: false,
-                        questions: [{
-                                title: "",
-                                answers: [],
-                                file: {
-                                    name: 'Obraz'
-                                }
-                            }],
+                        quizTitle: title.value,
+                        randomizeQuestions: (rQ.value == '0') ? false : true,
+                        randomizeAnswers: (rA.value == '0') ? false : true,
+                        multipleChoice: (mtp.value == '0') ? false : true,
+                        slideQuestions: (slide.value == '0') ? false : true,
+                        questions: parsedBody
                     },
                     methods: {
                         addRow: function() {
@@ -160,8 +155,7 @@
                                 }
                             });
                         },
-                        addAnswer: function (index, event) {
-                            event.preventDefault();
+                        addAnswer: function (index) {
                             var elem = document.createElement('td');
                             this.questions[index].answers.push({
                                 answer: "",
@@ -179,8 +173,7 @@
                             var file = event.target.files[0];
                             row.file = file
                         },
-                        send: (event) => {
-                            event.preventDefault();
+                        send: () => {
                             var inputs = document.querySelectorAll('input[type=text]');
                             var element = document.querySelector('.help');
                                 element.style.display = 'none';
@@ -222,34 +215,25 @@
                                 $(document).ready(function() {
                                     var token =  $('input[name="csrf_value"]').attr('value');
                                     var name =  $('input[name="csrf_name"]').attr('value');
-                                    var files = [];
-                                    var fileInputs = document.querySelectorAll('.file-input');
-                                    var myFormData = new FormData();
-
-                                    fileInputs.forEach( (item) => {
-                                        files.push(item.files);
-                                    })
-
-                                    myFormData.append('pictureFile[]', files);
-                                    myFormData.append('csrf_name', name);
-                                    myFormData.append('csrf_value', token);
-                                    myFormData.append('pattern', pattern);
-                                    myFormData.append('randomizeAnswers', app.randomizeAnswers);
-                                    myFormData.append('randomizeQuestions', app.randomizeQuestions);
-                                    myFormData.append('multipleChoice', app.multipleChoice);
-                                    myFormData.append('slideQuestions', app.slideQuestions);
-                                    myFormData.append('quizTitle', app.quizTitle);
+                                    
+                                    var path = $('#url').attr('value');
 
                                     $.ajax({
                                         type: "POST",
-                                        url: "./create",
-                                        processData: false,
-                                        enctype: 'multipart/form-data', 
-                                        contentType: false,
-                                        data: myFormData,
+                                        url: url,
+                                        data: {
+                                            csrf_name: name,
+                                            csrf_value: token,
+                                            pattern: pattern,
+                                            path: path,
+                                            randomizeAnswers: app.randomizeAnswers,
+                                            randomizeQuestions: app.randomizeQuestions,
+                                            multipleChoice: app.multipleChoice,
+                                            slideQuestions: app.slideQuestions,
+                                            quizTitle: app.quizTitle,
+                                        },
                                         success: function(data) {
-                                            console.log(data);
-                                            window.location.href = 'http://www.frizcode.me/';
+                                            window.location.href = 'https://www.frizcode.me/myQuizzes';
                                         }
                                     })
                                 });
@@ -258,19 +242,13 @@
                     }
                 });
 
-                var bts = document.querySelectorAll('button');
+                $('#rA').remove();
+                $('#rQ').remove();
+                $('#title').remove();
+                $('#body').remove();
+                $('#slide').remove();
+                $('#mtp').remove();
 
-                document.querySelector('.quizTitle').focus();
-                document.querySelector('.quizTitle').select();
-
-                bts[1].addEventListener('click', () => {
-                    setTimeout(() => {
-                        var txt = document.querySelectorAll('.q');
-                        txt[txt.length-1].focus();
-                        txt[txt.length-1].select();
-                    
-                    },10)
-                })
             </script>
         </div>
 

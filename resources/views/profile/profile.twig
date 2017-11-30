@@ -13,7 +13,7 @@
                 </div>
                 {% if auth.check %}
                 <div class="profile__buttons">
-                    <a href="#" class="button is-link is-outlined">Modyfikuj</a>
+                    <a href="{{ path_for('modify.user') }}" class="button is-link is-outlined">Modyfikuj</a>
                 </div>
                 {% endif %}
                 <div class="profile__details">

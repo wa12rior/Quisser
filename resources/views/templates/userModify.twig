@@ -1,0 +1,60 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <style>
+        input {
+            outline: none;
+            border-bottom: 1px solid #F7DEF7;
+        }
+
+        textarea {
+            border: 1px solid #F7DEF7;
+        }
+    </style>
+    <div class="profile">
+                <div class="profile__card">
+                    <div class="profile__top">
+                        <div class="profile__avatar">
+                            <img src="logo2.png" alt="+">
+                            {#<input type="" name="" value="">    #}
+                        </div>
+                        <div class="profile__topBackground"></div>
+                    </div>
+                    {% if auth.check %}
+                    <form action="{{ path_for('modify.user') }}" method="post" autocomplete="off">
+                    <div class="profile__buttons">
+                        <button type="submit" class="button is-link is-outlined">Zatwierdź</button>
+                        {{
+                            csrf.field | raw
+                        }}
+                    </div>
+                    {% endif %}
+                    <div class="profile__details">
+                        <div class="profile__detailsGroup">
+                            <header class="detail__header">Nazwisko</header>
+                            <input type="text" name="surname" value={{ full_name }}>   
+                        </div>
+                        <div class="profile__detailsGroup">
+                            <header class="detail__header">Opis</header>
+                            <textarea type="textarea" rows="2" cols="20" name="desc">{{ description }}</textarea>   
+                        </div>
+                        <div class="profile__detailsGroup">
+                            <header class="detail__header">Data urodzenia</header>
+                            <input type="date" name="birthDate" value={{ date_of_birth }}>   
+                        </div>
+                        <div class="profile__detailsGroup">
+                            <header class="detail__header">Wiek</header>
+                            <input type="number" name="age" value={{ age }}>   
+                        </div>
+                        <div class="profile__detailsGroup">
+                            <header class="detail__header">Miejscowość</header>
+                            <input type="text" name="location" value={{ location }}>   
+                        </div>
+                    </div>
+                    </form>
+                </div>
+        </div>
+
+    
+
+{% endblock %}

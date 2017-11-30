@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
         <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
         <link rel="icon" href="{{ base_url() }}/images/Quisser.ico" />
+        <meta name="theme-color" content="#551A8B" />
     </head>
     <body style="height: initial;">
         {% include 'templates/partials/navigation.twig' %}
@@ -16,30 +17,36 @@
         <div class="container_">
             <div class="gradient"></div>
             {% include 'templates/partials/flash.twig' %}
-            <div class="app" style="margin-top: 20px;">
+            <div class="app" style="margin-top: 20px; background-color: #FFF;">
                 <div class="app__quiz">
-                    <header class="is-size-3-mobile"><p class="is-size-1">{{ title }}</p><p class="is-size-6">Stworzony przez: {{ author }}</p></header><br>
+                    <header><p class="title">{{ title }}</p><p class="author">Stworzony przez: {{ author }}</p></header><br>
                     <div class="app__content">
                         <input type="hidden" class="rand"  value="{{ randomizeQuestions }}">
                         <input type="hidden" class="rand"  value="{{ randomizeAnswers }}">
                         <input type="hidden" class="slide"  value="{{ slideQuestions }}">
                         <form method="post" action="{{ path_for('check') }}">
+                        <input type="hidden" name="mtp"  value="{{ multipleChoice }}">
                             <input type="hidden" name="url" value="{{ url }}">
                             <ol class="questions" style="margin-left: 40px;">
                                 {% for key, question in questions %}
-                                    <li class="question is-size-3">
+                                    <li class="question">
                                         <p class="question__title"> {{ question.title }} <p>
-                                        <div class="question__answers is-size-5">
+                                        <div class="question__answers">
                                             <ol class="answers">
                                             {% for answer in question.answers %}
                                                 <li type="A">
                                                     <span>
                                                         {% if multipleChoice %}
-                                                        <input type="checkbox" value="false" name="answers[{{ key }}]">
-                                                        {{ answer.answer }}
+                                                        <label>
+                                                            <input type="checkbox" class="answ" value="false">
+                                                            <input type="hidden" class="hidd" value="false" name="answers[{{ key }}][{{ loop.index  - 1 }}]">
+                                                            {{ answer.answer }}
+                                                        </label>
                                                         {% else %}
-                                                        <input type="radio" value="false" name="answers[{{ key }}]">
-                                                        {{ answer.answer }}
+                                                        <label>
+                                                            <input type="radio" class="answ" value="{{ loop.index - 1 }}" name="answers[{{ key }}]">
+                                                            {{ answer.answer }}
+                                                        </label>
                                                         {% endif %}
                                                     </span>
                                                 </li>
@@ -56,7 +63,7 @@
                                     <button class="button next" style="margin: 20px 0;">Następne</button>
                                 </div>
                                 {% endif %}
-                                <button type="submit" class="button is-link" style="margin: 20px 0;">Skończ</button>
+                                <button type="submit" class="button is-link" style="margin: 20px 0;">Zakończ</button>
                                 {{
                                     csrf.field | raw
                                 }}
@@ -68,7 +75,6 @@
         </div>
 
         {% include 'templates/partials/footer.twig' %}
-
         <script>
             function randElements(container) {
                 for (let i = container.children.length; i >= 0; i--) {
@@ -109,17 +115,26 @@
             let questions = document.querySelectorAll('.question');
             let answers = document.querySelectorAll('.answers');
 
-            if (rand[0].value) {
+            let inputs = document.querySelectorAll('.answ');
+            let inputsHidden = document.querySelectorAll('.hidd');
+
+            inputs.forEach( (item, index) => {
+                item.addEventListener('change', () => {
+                    inputsHidden[index].value = item.value;
+                })
+            })
+
+            if (rand[0].value == "1") {
                 randElements(questionsWrapper);
             }
 
-            if (rand[1].value) {
+            if (rand[1].value == "1") {
                 answers.forEach( (item) => {
                     randElements(item);
                 })
             }
 
-            if (slide.value) {
+            if (slide.value == true) {
                 questions.forEach( (item, index) => {
                     let title = document.querySelectorAll('.question__title')[index];
                     item.style.display = 'none';

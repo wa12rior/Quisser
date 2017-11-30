@@ -6,29 +6,83 @@
 
     <div class="app desktop-view">
         <div class="app__content">
-            <header class="is-size-5-mobile is-size-3-tablet is-size-2">Moje Quizy</header>
-            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Stworzone Quizy</div>
+            <header class="is-size-5-mobile is-size-3-tablet is-size-2" style="color: #FFF;">Moje Quizy</header>
+            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Stworzone Quizy
+                <button class="button is-info is-outlined bt">Zwiń</button>     
+              </div>
             <div class="section__new">
                 {% for title in created["titles"] %}
-                        <div class="new__quiz">
-                            <p>{{ loop.index }}</p>
-                            <a class="button is-dark" href="https://www.frizcode.me/{{ created["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
-                            <strong>{{ created["created"][loop.index - 1] }}</strong>
+                        <div class="card">
+                            <header class="card-header">
+                                    <p class="card-header-title is-size-5-touch">
+                                    <strong class="is-size-4-touch">Tytuł: </strong>&nbsp; {{ title }}
+                                    </p>
+                                    <a class="delete is-large" href="https://www.frizcode.me/delete/{{ created["slugs"][loop.index - 1] }}" style="margin: 7px;"></a>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                Utworzony:
+                                <br>
+                                <time class="dateTime">{{ created["created"][loop.index - 1] }}</time><br>
+                                Aktualizowany:
+                                <br>
+                                <time class="dateTime">{{ created["updated"][loop.index - 1] }}</time>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="https://www.frizcode.me/stats/{{ created["slugs"][loop.index - 1] }}" class="card-footer-item">Statystyki</a>
+                                <a href="https://www.frizcode.me/modify/{{ created["slugs"][loop.index - 1] }}" class="card-footer-item">Modyfikuj</a>
+                                <a href="https://www.frizcode.me/{{ created["author"] }}/{{ created["slugs"][loop.index - 1] }}" class="card-footer-item">Rozwiąż</a>
+                            </footer>
                         </div>
                 {% endfor %}
             </div>
-            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Wykonane Quizy</div>
+            <div class="quizzes__section is-size-6-mobile is-size-4-tablet is-size-4">Wykonane Quizy
+            <button class="button is-info is-outlined bt">Zwiń</button>     
+            </div>
             <div class="section__new">
-                {% for title in history["titles"] %}
-                        <div class="new__quiz">
-                            <p>{{ loop.index }}</p>
-                            <p>Autor: {{ history["authors"][loop.index - 1] }}</p>
-                            <a class="button is-dark" href="https://www.frizcode.me/{{ history["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
+                {% for title in done["titles"] %}
+                <div class="card">
+                    <header class="card-header">
+                            <p class="card-header-title is-size-5-touch">
+                            <strong class="is-size-4-touch">Autor: </strong>&nbsp; {{ done["author"][loop.index - 1] }}
+                            </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                        Tytuł:
+                        <br>
+                        <div>{{ title }}</div><br>
+                        Zrobiony:
+                        <br>
+                        <time class="dateTime">{{ done["created"][loop.index - 1] }}</time><br>
                         </div>
-                {% endfor %}
+                    </div>
+                    <footer class="card-footer">
+                        <a href="https://www.frizcode.me/view/{{ done["slugs"][loop.index - 1] }}" class="card-footer-item">Zobacz Wyniki</a>
+                    </footer>
+                </div>
+        {% endfor %}
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script>
+    let buttons = document.querySelectorAll('.bt');
+    let sections = document.querySelectorAll('.section__new');
+    buttons.forEach( (item, index) => {
+        item.addEventListener('click', () => {
+                item.innerHTML = (item.innerHTML == "Rozwiń") ? "Zwiń" : "Rozwiń";
+        })
+    });
+    $( "button:first" ).click(function() {
+        $( ".section__new:first" ).fadeToggle( "slow", "linear" );
+    });
+
+    $( "button:last" ).click(function() {
+        $( ".section__new:last" ).fadeToggle( "slow", "linear" );
+    });
+    </script>  
 
 {% else %}
     {#Content if user is not authenticated#}

@@ -32,7 +32,7 @@ class QuizController extends Controller {
 
             $count = History::count();
 
-            $history = History::where('user_id', $_SESSION['user'])->orderBy('id', 'desc')->take($count)->skip(5)->get();
+            $history = History::where('user_id', $_SESSION['user'])->orderBy('id', 'desc')->take($count)->skip(8)->get();
 
             foreach($history as $die) {
                 History::where('id', $die->id)->delete();

@@ -12,6 +12,8 @@ class QuizCreationController extends Controller {
     }
 
     public function postQuiz($request, $response) {
+        var_dump($_POST);
+        
         $randomize = [
             'questions' => ($_POST['randomizeQuestions'] == 'true') ? 1 : 0,
             'answers' => ($_POST['randomizeAnswers'] == 'true') ? 1 : 0,
@@ -42,6 +44,6 @@ class QuizCreationController extends Controller {
         $quiz->slide_questions = $slideQuestions;
         $quiz->url = $url . $quiz->id;
         $quiz->save();
-        $this->flash->addMessage('info', 'You have created quiz with url https://www.frizcode.me/' . $quiz->url);
+        $this->flash->addMessage('info', 'Stworzyłeś quiz z URL: https://www.frizcode.me/' . $quiz->url);
     }
 }

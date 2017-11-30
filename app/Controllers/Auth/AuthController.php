@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\UserDesc;
 use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 
@@ -51,6 +52,10 @@ class AuthController extends Controller {
             'email' => $request->getParam('email'),
             'name' => $request->getParam('name'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+        ]);
+
+        $desc = UserDesc::create([
+            'user_id' => $user->id
         ]);
 
         $this->flash->addMessage('info', 'Twoje konto zostało pomyślnie utworzone!');

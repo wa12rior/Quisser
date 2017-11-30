@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quisser</title>
+        <link href="https://fonts.googleapis.com/css?family=Raleway|Rokkitt" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+        <link rel="stylesheet" href="{{ base_url() }}/css/standardize.css">
+        <link rel="stylesheet" href="{{ base_url() }}/css/style.css">
+        <link rel="icon" href="{{ base_url() }}/images/Quisser.ico" />
+        <meta name="theme-color" content="#551A8B" />
+    </head>
+    <body style="height: initial;">
+        {% include 'templates/partials/navigation.twig' %}
+
+        <div class="container_">
+            <div class="gradient"></div>
+            {% include 'templates/partials/flash.twig' %}
+            <div class="app" style="margin-top: 20px; background-color: #FFF;">
+                <div class="app__quiz">
+                    <header class="is-size-3-mobile"><p class="is-size-1">{{ title }}</p><p class="is-size-6">Stworzony przez: {{ author }}</p></header><br>
+                    <div class="app__content">
+                            <input type="hidden" name="url" value="{{ url }}">
+                            <ol class="questions" style="margin-left: 40px;">
+                                <i>Zielona - dobrze zaznaczone</i><br>
+                                <i>Pomarańczowa - powinna być zaznaczona</i>
+                                {% for key, question in questions %}
+                                    <li class="question is-size-3">
+                                        <p class="question__title"> {{ question.title }} <p>
+                                        <div class="question__answers is-size-5">
+                                            <ol class="answers">
+                                            {% for answer in question.answers %}
+                                                <li type="A">
+                                                    <span>
+                                                        {% if good[key][loop.index - 1] %}
+                                                        <label style="color: #0F0;">
+                                                            {{ answer.answer }}
+                                                        </label>
+                                                        {% elseif bad[key][loop.index - 1] %}
+                                                        <label style="color: orange;">
+                                                            {{ answer.answer }}
+                                                        </label>
+                                                        {% else %}
+                                                        <label >
+                                                            {{ answer.answer }}
+                                                        </label>
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+                                            {% endfor %}
+                                            </ol>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                            <div class="buttons">
+                                <a class="button is-link" href="{{ path_for('myQuizzes') }}" style="margin: 20px 0;">Wróć</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'templates/partials/footer.twig' %}
+
+    </body>
+</html>

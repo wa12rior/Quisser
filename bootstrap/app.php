@@ -6,10 +6,13 @@ session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+date_default_timezone_set('Europe/Warsaw');
+
 $app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
+        'rootPath' => "../",
         'db' => [
             'driver'    => 'mysql',
             'host'      => '127.0.0.1',
@@ -19,7 +22,12 @@ $app = new \Slim\App([
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
-
+        ],
+        'images' => [
+            'uploadPath' => "/public/images/upload/",
+            'manager' => [
+                'driver' => 'imagick'
+            ]
         ]
     ],
 ]);
@@ -33,6 +41,11 @@ $capsule->bootEloquent();
     
 $container['db'] = function ($container) use ($capsule) {
     return $capsule;
+};
+
+
+$container['filesystem'] = function($container) {
+    return \App\Services\FilesystemService::fromRelativePath(dirname(__FILE__) . "/" . $container['settings']['rootPath']);
 };
 
 $container['auth'] = function ($container) {
@@ -63,6 +76,7 @@ $container['view'] = function($container) {
     return $view;
 };
 
+
 $container['validator'] = function($container) {
     return new App\Validation\Validator;
 };
@@ -80,11 +94,27 @@ $container['QuizCreationController'] = function($container) {
 };
 
 $container['QuizModifyController'] = function($container) {
-    return new \App\Controllers\QuizCreationController($container);
+    return new \App\Controllers\QuizModifyController($container);
+};
+
+$container['QuizCorrectedController'] = function($container) {
+    return new \App\Controllers\QuizCorrectedController($container);
+};
+
+$container['StatisticsController'] = function($container) {
+    return new \App\Controllers\StatisticsController($container);
 };
 
 $container['QuizHandlerController'] = function($container) {
     return new \App\Controllers\QuizHandlerController($container);
+};
+
+$container['UserModifyController'] = function($container) {
+    return new \App\Controllers\UserModifyController($container);
+};
+
+$container['QuizDeleteController'] = function($container) {
+    return new \App\Controllers\QuizDeleteController($container);
 };
 
 $container['UserQuizzesController'] = function($container) {
@@ -108,8 +138,15 @@ $container['csrf'] = function ($container) {
 };
 
 
+$container['UploadService'] = function($container) {
+    $manager = new \Intervention\Image\ImageManager($container['settings']['images']['manager']);
+
+    return new \App\Services\UploadService($manager, $container);
+};
+
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\CredentialsMiddleware($container));
+
 $app->add(new \App\Middleware\CsrfViewMiddleware($container));
 
 

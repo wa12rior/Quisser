@@ -5,30 +5,65 @@
     {#Content if user is authenticated#}
 
     <div class="app desktop-view">
-        <header class="app__header is-size-4-mobile is-size-2-tablet is-size-1">Witaj {{ auth.user.name }}!</header>
         <div class="app__content">
             <div class="quizzes__section is-size-5-mobile is-size-3-tablet is-size-2">Nowe Quizy</div>
             <div class="section__new">
                 {% for title in new["titles"] %}
-                        <div class="new__quiz">
-                            <p>{{ loop.index }}</p>
-                            <p>Autor: {{ new["authors"][loop.index - 1] }}</p>
-                            <a class="button is-dark" href="https://www.frizcode.me/{{ new["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title is-size-5-touch">
+                                Autor: {{ new["authors"][loop.index - 1] }}
+                                </p>
+                                <a href="#" class="card-header-icon" aria-label="more options">
+                                </a>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                <strong class="is-size-4-touch">Tytul: </strong>{{ title }}
+                                <br>
+                                <br>
+                                <time class="dateTime">{{ new["created"][loop.index - 1] }}</time>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="https://www.frizcode.me/{{ new["slugs"][loop.index - 1] }}" class="card-footer-item">Rozwiąż</a>
+                            </footer>
                         </div>
+                
                 {% endfor %}
             </div>
-            <div class="quizzes__section is-size-6-mobile is-size-3-tablet is-size-2">Ostatnio Przeglądane Quizy</div>
+            <div class="quizzes__section is-size-5-mobile is-size-3-tablet is-size-2">Ostatnio Przeglądane Quizy</div>
             <div class="section__new">
                 {% for title in history["titles"] %}
-                        <div class="new__quiz">
-                            <p>{{ loop.index }}</p>
-                            <p>Autor: {{ history["authors"][loop.index - 1] }}</p>
-                            <a class="button is-dark" href="https://www.frizcode.me/{{ history["slugs"][loop.index - 1] }}"><p>{{ title }}</p></a>
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title is-size-5-touch">
+                                Author: {{ history["authors"][loop.index - 1] }}
+                                </p>
+                                <a href="#" class="card-header-icon" aria-label="more options">
+                                </a>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                <strong class="is-size-4-touch">Tytuł: </strong> {{ title }}
+                                <br>
+                                <br>
+                                <time class="dateTime" datetime="2016-1-1">{{ history["created"][loop.index - 1] }}</time>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="https://www.frizcode.me/{{ history["slugs"][loop.index - 1] }}" class="card-footer-item">Rozwiąż</a>
+                            </footer>
                         </div>
                 {% endfor %}
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script>
+        $(".app").hide(0).delay(50).fadeIn(1200);
+    </script>
+
 
 {% else %}
     {#Content if user is not authenticated#}
